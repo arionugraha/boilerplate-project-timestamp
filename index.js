@@ -26,12 +26,14 @@ function jsonReturnFactory(date) {
 }
 
 app.get("/api/:date?", function(req, res) {
-  let date = !isNaN(req.params.date)
-    ? new Date(parseInt(req.params.date))
-    : new Date(req.params.date);
+  let date;
 
-  if (!req.params.date) { 
-    date = new Date()
+  if (!req.params.date) {
+    date = new Date(); 
+  } else if (!isNaN(req.params.date)) {
+    date = new Date(parseInt(req.params.date));
+  } else {
+    date = new Date(req.params.date);
   }
 
   if (isNaN(date.getTime())) {
@@ -41,6 +43,7 @@ app.get("/api/:date?", function(req, res) {
 
   res.json(jsonReturnFactory(date));
 });
+
 
 const listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
