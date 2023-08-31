@@ -41,3 +41,8 @@ app.get("/api/:date?", function(req, res) {
 
   res.json(jsonReturnFactory(date));
 });
+
+const listener = app.listen(process.env.PORT, function () {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
+
